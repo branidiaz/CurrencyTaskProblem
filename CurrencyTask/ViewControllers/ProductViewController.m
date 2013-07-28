@@ -40,14 +40,19 @@
     return self;
 }
 
-- (void)viewDidLoad 
+- (void)viewDidLoad
 {
     [super viewDidLoad];
     
-
-    NSNumber *myNumber = [NSNumber numberWithDouble:[value doubleValue]];
+    
+    NSDecimalNumberHandler *roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 raiseOnExactness:FALSE raiseOnOverflow:TRUE raiseOnUnderflow:TRUE raiseOnDivideByZero:TRUE];
+    
+    NSDecimalNumber *myNumber = [NSDecimalNumber decimalNumberWithString:value];
+    
+    NSDecimalNumber *roundedDecimalNumber = [myNumber decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
+    
     [self.navTitle setTitle:[NSString stringWithFormat:@"Product: %@",bankProduct]];
-    [self.amount setText:[NSString stringWithFormat:@"%@ €",[myNumber stringValue]]];
+    [self.amount setText:[NSString stringWithFormat:@"%@ €",roundedDecimalNumber]];
     
 }
 

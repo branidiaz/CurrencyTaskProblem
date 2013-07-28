@@ -70,16 +70,9 @@
 
             [listofTransaction setArray:[self transactionArray:transactions]];
             
-            NSLog(@"the size of the array is %d",[listofTransaction count]);
-            
             NSSet *tran = [NSSet setWithArray:[listofTransaction valueForKey:@"name"]];
             listofDistincTransactions = [NSMutableArray arrayWithArray:[tran allObjects]];
-            
-            NSLog(@"the size of the array sss is %d",[listofDistincTransactions count]);
-            
-            NSLog(@"the size of the array sss is %@",[listofDistincTransactions objectAtIndex:3]);
-            
-            //[self.tableproducts reloadData];
+
             [self.collectionProducts reloadData];
 
 
@@ -112,9 +105,6 @@
     ConnectionLayer* connection = [[ConnectionLayer alloc] initWithRequest:request];
     
     [connection setCompletionBlock:^(NSArray* rates, NSError*error){
-        
-        
-        
         
         if (!error) {
             
@@ -162,7 +152,6 @@
 
 -(NSMutableDictionary *) parseRates:(NSArray*)rates {
     
-    //  NSMutableArray *rates =[[NSMutableArray alloc]init];
     
         NSMutableDictionary *keys = [[NSMutableDictionary alloc] init];
     
@@ -175,48 +164,28 @@
             NSMutableDictionary *ratesValues = [[NSMutableDictionary alloc] init];
             
             ratesValues = [keys objectForKey:valueFrom];
-//            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-//            [f setNumberStyle:NSNumberFormatterDecimalStyle];
-//            NSNumber * myNumber = [f numberFromString:[ra objectForKey:@"rate"]];
+
             
             NSDecimalNumber *number = [NSDecimalNumber decimalNumberWithString:[ra objectForKey:@"rate"]];
             
             NSString * valueTo =[ra objectForKey:@"to"];
-            //[ratesValues setObject:myNumber forKey:valueTo];
             [ratesValues setObject:number forKey:valueTo];
             
             
         } else {
             NSMutableDictionary *ratesValues = [[NSMutableDictionary alloc] init];
-//            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-//            [f setNumberStyle:NSNumberFormatterDecimalStyle];
-//            
-//            NSNumber * myNumber = [f numberFromString:[ra objectForKey:@"rate"]];
             
             NSDecimalNumber *number = [NSDecimalNumber decimalNumberWithString:[ra objectForKey:@"rate"]];
             
             NSString * valueTo =[ra objectForKey:@"to"];
-           // [ratesValues setObject:myNumber forKey:valueTo];
+
             
             [ratesValues setObject:number forKey:valueTo];
             
             NSString * valueFrom =[ra objectForKey:@"from"];
             [keys setObject:ratesValues forKey:valueFrom];
         }
-        
-        
-        
-        
-        
-        //
-        //
-        //        Rate *rate = [[Rate alloc] init];
-        //        [rate setFrom:[ra objectForKey:@"from"]];
-        //        [rate setTo:[ra objectForKey:@"to"]];
-        //        [rate setRate:[ra objectForKey:@"rate"]];
-        //
-        //        [rates addObject:rate];
-        
+
     }
     
     
@@ -524,11 +493,6 @@
         
         self.productViewController = [[ProductViewController alloc]initWithNibName:@"ProductViewController" forProduct:product withValue:amount bundle:nil];
         self.productViewController.delegate = self;
-        
-        
-        NSLog(@" altura %f",generalCell.frame.origin.y);
-        
-        // [self.navigationController pushViewController:self.productViewController animated:NO];
         
         
         [self.navigationController  presentViewController:self.productViewController animated:NO completion:nil];
